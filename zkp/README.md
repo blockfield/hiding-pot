@@ -16,6 +16,11 @@ Create setup:
     npm run setup
 ```
 
+Generate verifier Solidity contract:
+```
+    npx snarkjs generateverifier --vk build/withdraw_verification_key.json
+```
+
 
 ## Tests
 ```
