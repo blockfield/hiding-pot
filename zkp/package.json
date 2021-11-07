@@ -1,0 +1,20 @@
+{
+  "name": "hiding_pot",
+  "version": "0.0.1",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "compile": "npx circom circuits/withdraw.circom -o build/withdraw.json && npx snarkjs info -c build/withdraw.json",
+    "setup": "npx snarkjs setup --protocol groth -c build/withdraw.json --pk build/withdraw_proving_key.json --vk build/withdraw_verification_key.json",
+    "build": "mkdir -p build && npm run compile && npm run setup",
+    "test": "npm run build && npx snarkjs calculatewitness -c build/withdraw.json -i circuits/input.json -w build/witness.json && npx snarkjs proof -w build/witness.json --pk build/withdraw_proving_key.json -p build/proof.json --pub build/public.json && npx snarkjs verify --vk build/withdraw_verification_key.json -p build/proof.json --pub build/public.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "circom": "0.0.30",
+    "circomlib": "^0.0.10",
+    "snarkjs": "^0.1.16"
+  }
+}

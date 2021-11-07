@@ -19,7 +19,7 @@ async function main() {
     console.log("Verifier address:", verifier.address);
 
     const HidingPot = await ethers.getContractFactory("HidingPot");
-    const hidingPot = await HidingPot.deploy(verifier.address, hasher.address, 10*10**9, 10); // 10 CLV, 10 tree levels
+    const hidingPot = await HidingPot.deploy(verifier.address, hasher.address, 10*10**9, 5); // 10 CLV, 10 tree levels
     
     console.log("HidingPot address:", hidingPot.address);
 }
