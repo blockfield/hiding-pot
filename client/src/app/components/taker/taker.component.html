@@ -1,0 +1,32 @@
+<div class="m-5">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <label class="input-group-text col-form-label" for="amount">Amount</label>
+        </div>
+        <input
+            required
+            type="text"
+            class="form-control text-center"
+            id="amount"
+            name="amount"
+            placeholder="0.0001"
+            [dropSpecialCharacters]="false"
+            [allowNegativeNumbers]="false"
+            [mask]="'separator.4'"
+            [(ngModel)]="amount"
+        >
+    </div>
+</div>
+
+<div class="m-5">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <label class="input-group-text col-form-label" for="secret">Secret</label>
+        </div>
+        <input required type="text" class="form-control" id="secret" name="secret" placeholder="Any secret word..." [(ngModel)]="model.secret">
+    </div>
+</div>
+
+<div class="m-5 text-center">
+    <button class="btn btn-lg btn-dark">Send</button>
+</div>
