@@ -1,0 +1,48 @@
+<div class="m-2">
+    <div class="row">
+        <div class="col-2 text-center my-auto">
+            <div class="dropdown">
+                <button [ngClass]="{'btn-secondary': !selectedAccount, 'btn-success': selectedAccount}" class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <ng-container *ngIf="!selectedAccount">Select account...</ng-container>
+                    <ng-container *ngIf="selectedAccount">{{selectedAccount.name}}</ng-container>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <ng-container *ngIf="accounts.length === 0">
+                        <span class="dropdown-item" style="cursor: default">
+                            There are no accounts yet...
+                        </span>
+                    </ng-container>
+                    <ng-container *ngIf="accounts && accounts.length > 0">
+                        <a
+                            *ngFor="let account of accounts"
+                            class="dropdown-item"
+                            style="cursor: pointer"
+                            (click)="selectAccount(account)"
+                        >
+                            {{account.name}}
+                        </a>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 text-center my-auto">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text col-form-label" for="name">Name</label>
+                </div>
+                <input required type="text" class="form-control" id="name" name="name" placeholder="Demo" [(ngModel)]="newAccount.name">
+            </div>
+        </div>
+        <div class="col-4 text-center my-auto">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text col-form-label" for="privateKey">Private key</label>
+                </div>
+                <input required type="text" class="form-control" id="privateKey" name="privateKey" placeholder="Demo private key..." [(ngModel)]="newAccount.privateKey">
+            </div>
+        </div>
+        <div class="col-2 text-center my-auto">
+            <button class="btn btn-primary" (click)="createNewAccount()" [disabled]="!newAccount.name || !newAccount.privateKey">Add</button>
+        </div>
+    </div>
+</div>
