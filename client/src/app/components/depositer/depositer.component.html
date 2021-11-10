@@ -9,12 +9,15 @@
             class="form-control text-center"
             id="amount"
             name="amount"
-            placeholder="0.0001"
+            placeholder="10"
             [dropSpecialCharacters]="false"
             [allowNegativeNumbers]="false"
-            [mask]="'separator.4'"
+            [mask]="'separator.0'"
             [(ngModel)]="amount"
         >
+        <div class="input-group-append">
+            <label class="input-group-text col-form-label" for="amount">Only 10 is working for hackaton</label>
+        </div>
     </div>
 </div>
 
@@ -28,5 +31,5 @@
 </div>
 
 <div class="m-5 text-center">
-    <button class="btn btn-lg btn-dark">Send</button>
+    <button class="btn btn-lg btn-dark" (click)="deposit()">Deposit</button>
 </div>

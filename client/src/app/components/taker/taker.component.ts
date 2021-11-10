@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TakerModel } from 'src/app/models/taker.model';
+import { TakeService } from 'src/app/services/take.service';
 
 @Component({
   selector: 'app-taker',
@@ -11,9 +12,21 @@ export class TakerComponent implements OnInit {
   public model: TakerModel = new TakerModel()
   public amount: string = ''
 
-  constructor() { }
+  constructor(
+    private takeService: TakeService,
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  public take(): void {
+    if (this.amount !== '10') {
+      return;
+    }
+
+    this.model.amount = +this.amount
+
+    this.takeService.take(this.model)
   }
 
 }

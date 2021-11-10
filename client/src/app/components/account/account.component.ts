@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountModel } from 'src/app/models/account.model';
 import { StorageService } from 'src/app/services/storage.service';
+import { WalletService } from 'src/app/services/wallet.service';
 
 @Component({
   selector: 'app-account',
@@ -15,7 +16,8 @@ export class AccountComponent implements OnInit {
   public newAccount: AccountModel = new AccountModel()
 
   constructor(
-    private storageService: StorageService
+    private storageService: StorageService,
+    private walletService: WalletService,
   ) { }
 
   ngOnInit(): void {
@@ -28,11 +30,15 @@ export class AccountComponent implements OnInit {
 
   public selectAccount(account: AccountModel): void {
     this.selectedAccount = account
+
+    this.walletService.privateKey = this.selectedAccount.privateKey
   }
 
   public createNewAccount(): void {
     this.accounts.push(this.newAccount)
-    this.selectedAccount = this.newAccount
+    this.selectAccount(this.newAccount)
+
+    this.storageService.set(this.accountsKey, this.accounts)
 
     this.newAccount = new AccountModel()
   }

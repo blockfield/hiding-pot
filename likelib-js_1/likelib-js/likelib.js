@@ -198,8 +198,9 @@ class Likelib
                             }
                             else if(reply.status_code == Likelib.Tx.Status.Success) {
                                 if(reply.message) {
-                                    let hex_reply = Buffer.from(reply.message, 'base64').toString('hex');
-                                    hex_reply = hex_reply.slice(8, hex_reply.length)
+                                    let hex_reply = reply.message.slice(8, reply.message.length)
+                                    // let hex_reply = Buffer.from(reply.message, 'base64').toString('hex');
+                                    // hex_reply = hex_reply.slice(8, hex_reply.length)
                                     const decoded = Web3Abi.decodeParameters(abi[i].outputs, hex_reply);
                                     cb(null, decoded, hex_hash);
                                 }

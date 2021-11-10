@@ -1,6 +1,8 @@
 export class TakerModel {
     constructor(
         public amount: number = 0,
-        public secret: string = ''
+        public proof: string = '',
+        public nullifierHash: string = '',
+        public root: string = '',
     ) {}
 }
