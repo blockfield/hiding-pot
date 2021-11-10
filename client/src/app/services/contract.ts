@@ -4,8 +4,6 @@ import { abiContract } from "../api/abi-contract";
 import { Proof } from "../models/proof";
 
 export class Contract {
-    private contractAddress: string = '6F9GsmMe9MWyBaRaEG7bsMUBn3e'
-
     private lk: LikeLib
     private account: LikeLib.Account
     private myPublicKey: string
@@ -16,7 +14,7 @@ export class Contract {
         this.myPublicKey = this.account.getAddress()
 
         this.lk = new LikeLib("ws://localhost:50051")
-        this.contract = LikeLib.Contract.deployed(this.lk, this.account, abiContract.abi, this.contractAddress)
+        this.contract = LikeLib.Contract.deployed(this.lk, this.account, abiContract.abi, abiContract.address)
         this.contract._setupMethods(abiContract.abi)
     }
 
