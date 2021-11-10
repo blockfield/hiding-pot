@@ -1,5 +1,5 @@
 export let abiContract = {
-    address: '6F9GsmMe9MWyBaRaEG7bsMUBn3e',
+    address: 'Un8gnEc89HG9XaFov39VrbVvdSU',
     abi: [
         {
           "inputs": [

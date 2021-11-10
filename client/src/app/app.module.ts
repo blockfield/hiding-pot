@@ -10,11 +10,13 @@ import { AppComponent } from './app.component';
 import { DepositerComponent } from './components/depositer/depositer.component';
 import { TakerComponent } from './components/taker/taker.component';
 import { AccountComponent } from './components/account/account.component';
+import { NoCommaPipe } from './pipes/no-comma.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     DepositerComponent,
+    NoCommaPipe,
     TakerComponent,
     AccountComponent
   ],

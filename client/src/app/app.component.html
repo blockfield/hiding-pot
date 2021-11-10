@@ -12,9 +12,9 @@
       <app-taker></app-taker>
     </div>
   </div>
-  <div *ngIf="myBalance" class="row">
+  <div *ngIf="myBalance !== null" class="row">
     <div class="col text-center">
-      My Current Balance is: {{myBalance}}
+      My Current Balance is: {{ myBalance| number : '1.9-9' | noComma  }}
     </div>
   </div>
 </div>

@@ -27,25 +27,39 @@ export class DepositService {
   
     let contract = new Contract(this.walletService.privateKey)
 
-    let pathElements: Object[] = []
-    for (let i = 0; i < 5; i++) {
+    let pathElements: string[] = []
+    const pathElementsCount = 1
+    for (let i = 0; i < pathElementsCount; i++) {
       pathElements.push(await contract.filledSubtrees(i))
     }
 
+    console.log('pathElements', pathElements)
+
     let index = await contract.nextIndex()
 
-    let secretHash = Buffer.from(sha.sha256(model.secret)).slice(0, 248).toString('hex')
-    let nullifier =  Buffer.from(sha.sha256(secretHash)).slice(0, 248).toString('hex')
+    console.log('nextIndex', index)
+
+    console.log('sha256 secret', sha.sha256(model.secret))
+    let secretHash = Buffer.from(sha.sha256(model.secret), 'hex').slice(0, 31)
+    console.log('secretHash', secretHash)
+
+    console.log('sha256 nullifier', sha.sha256(secretHash))
+    let nullifier =  Buffer.from(sha.sha256(secretHash), 'hex').slice(0, 31)
+    console.log('nullifier', nullifier)
+
     let commitment = this.hashService.pedersenHash496(nullifier, secretHash)
+    console.log('commitment', commitment)
 
-    let pathIndex: number[] = [+index % 2] // todo ?
+    let pathIndex: number[] = [index % 2] // todo ?
 
-    contract.deposit(commitment, model.amount)
+    await contract.deposit(commitment, model.amount)
 
     let root = await contract.getLastRoot()
+    console.log('root', root)
     let nullifierHash = this.hashService.pedersenHash248(nullifier)
 
-    this.proofService.generateProof(root, nullifierHash, nullifier, secretHash, pathElements, pathIndex)
+    let proof = await this.proofService.generateProof(root, nullifierHash, nullifier.toString('hex'), secretHash.toString('hex'), pathElements, pathIndex)
 
+    console.log('GENERATED!', proof)
   }
 }

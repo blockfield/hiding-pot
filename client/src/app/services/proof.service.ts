@@ -8,15 +8,17 @@ export class ProofService {
   constructor() { }
 
   public async generateProof(
-    root: Object,
+    root: string,
     nullifierHash: string,
     nullifier: string,
-    secret: string,
-    pathElements: Object[],
+    secretHash: string,
+    pathElements: string[],
     pathIndex: number[]
   ): Promise<Object> {
+    console.log('generate Proof params', root, nullifierHash, nullifier, secretHash, pathElements, pathIndex)
+
     return await (window as any).witness({
-      root, nullifierHash, nullifier, secret, pathElements, pathIndex
+      root, nullifierHash, nullifier, secretHash, pathElements, pathIndex
     })
   }
 }

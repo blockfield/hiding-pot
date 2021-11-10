@@ -10,7 +10,7 @@ import { DepositService } from 'src/app/services/deposit.service';
 export class DepositerComponent implements OnInit {
 
   public model: DepositerModel = new DepositerModel()
-  public amount: string = ''
+  public amount: string = '10'
 
   constructor(
     private depositService: DepositService,

@@ -10,7 +10,7 @@ import { WalletService } from './services/wallet.service';
 export class AppComponent implements OnInit {
   title = 'ng-client';
 
-  public myBalance: number|null = null;
+  public myBalance: number|null = null
 
   constructor(
     private walletService: WalletService
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
       }
 
       this.myBalance = await new Contract(this.walletService.privateKey).getMyBalance()
-    }, 1000)
+    }, 50000)
   }
 
 }
