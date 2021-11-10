@@ -7,14 +7,16 @@ export class ProofService {
 
   constructor() { }
 
-  public generateProof(
+  public async generateProof(
     root: Object,
     nullifierHash: string,
     nullifier: string,
     secret: string,
     pathElements: Object[],
     pathIndex: number[]
-  ): Object {
-    return {}
+  ): Promise<Object> {
+    return await (window as any).witness({
+      root, nullifierHash, nullifier, secret, pathElements, pathIndex
+    })
   }
 }
