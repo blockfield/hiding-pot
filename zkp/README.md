@@ -21,6 +21,11 @@ Generate verifier Solidity contract:
     npx snarkjs generateverifier --vk build/withdraw_verification_key.json
 ```
 
+Generate bin proving key:
+```
+    node node_modules/websnark/tools/buildpkey.js -i build/withdraw_proving_key.json -o build/withdraw_proving_key.bin
+```
+
 
 ## Tests
 ```
