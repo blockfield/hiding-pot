@@ -21,24 +21,21 @@
 <div class="m-5">
     <div class="input-group">
         <div class="input-group-prepend">
-            <label class="input-group-text col-form-label" for="proof">Proof</label>
+            <label class="input-group-text col-form-label" for="proof">Nonce</label>
         </div>
         <input required type="text" class="form-control" id="proof" name="proof" placeholder="Paste here..." [(ngModel)]="model.proof">
-    </div>
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <label class="input-group-text col-form-label" for="nullifier_hash">Hash</label>
-        </div>
-        <input required type="text" class="form-control" id="nullifier_hash" name="nullifier_hash" placeholder="Paste here..." [(ngModel)]="model.nullifierHash">
-    </div>
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <label class="input-group-text col-form-label" for="root">Root</label>
-        </div>
-        <input required type="text" class="form-control" id="root" name="root" placeholder="Paste here..." [(ngModel)]="model.root">
     </div>
 </div>
 
 <div class="m-5 text-center">
-    <button class="btn btn-lg btn-dark" (click)="take()">Withdraw</button>
+    <button class="btn btn-lg btn-dark" (click)="take(mymodal)" [disabled]="isWithdrawing">Withdraw</button>
 </div>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header mx-auto">
+      <h4 class="modal-title" id="modal-basic-title">Withdraw is success!</h4>
+    </div>
+    <div class="modal-body">
+        
+    </div>
+</ng-template>

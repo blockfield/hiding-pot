@@ -31,5 +31,26 @@
 </div>
 
 <div class="m-5 text-center">
-    <button class="btn btn-lg btn-dark" (click)="deposit()">Deposit</button>
+    <button class="btn btn-lg btn-dark" (click)="deposit(mymodal)" [disabled]="isGenerating">Deposit</button>
 </div>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header mx-auto">
+      <h4 class="modal-title" id="modal-basic-title">Copy nonce below to withdraw...</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-8 text-center my-3">
+                {{proof | slice:0:5}}...{{proof | slice: -5}}
+            </div>
+            <div class="col-4 text-center my-3">
+                <fa-icon class="copy float-left" size="1x" [icon]="faCopy" (click)="copyProof()"></fa-icon>
+            </div>
+        </div>
+        <div class="row">
+            <div *ngIf="isCopied" class="col text-center">
+                Copied!
+            </div>
+        </div>
+    </div>
+</ng-template>

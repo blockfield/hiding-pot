@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
       }
 
       this.myBalance = await new Contract(this.walletService.privateKey).getMyBalance()
-    }, 50000)
+    }, 1000)
   }
 
 }

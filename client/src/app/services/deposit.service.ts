@@ -19,12 +19,9 @@ export class DepositService {
     private walletService: WalletService,
   ) { }
 
-  public async deposit(model: DepositerModel): Promise<void> {
-    console.log(model)
-    console.log(this.walletService.privateKey)
-
+  public async deposit(model: DepositerModel): Promise<string> {
     if (!this.walletService.privateKey) {
-      return
+      return ''
     }
   
     let contract = new Contract(this.walletService.privateKey)
@@ -62,7 +59,11 @@ export class DepositService {
 
     let proof = await this.proofService.generateProof(bnRoot.toString(), nullifierHash, bnNullifier.toString(), bnSecretHash.toString(), pathElements, pathIndex)
 
-    console.log('GENERATED!', proof)
+    return proof.pi_a[0] + ':' + proof.pi_a[1] + ':' +
+      proof.pi_b[0][0] + ':' + proof.pi_b[0][1] + ':' + 
+      proof.pi_b[1][0] + ':' + proof.pi_b[1][1] + ':' + 
+      proof.pi_c[0] + ':' + proof.pi_c[1] + ':' +
+      nullifierHash + ':' + bnRoot.toString()
   }
 
   private createPathsFromIndex(index: number): string[] {

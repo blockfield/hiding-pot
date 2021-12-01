@@ -6,15 +6,17 @@
   </div>
   <div *ngIf="walletService.privateKey" class="row">
     <div class="col-lg-6 border border-bottom-0">
+
       <app-depositer></app-depositer>
+
+      <div *ngIf="myBalance !== null" class="row">
+        <div class="col text-center">
+          Balance: {{ myBalance| number : '1.2-2' | noComma  }}
+        </div>
+      </div>
     </div>
     <div class="col-lg-6 border border-bottom-0">
       <app-taker></app-taker>
-    </div>
-  </div>
-  <div *ngIf="myBalance !== null" class="row">
-    <div class="col text-center">
-      My Current Balance is: {{ myBalance| number : '1.9-9' | noComma  }}
     </div>
   </div>
 </div>

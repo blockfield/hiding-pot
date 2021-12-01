@@ -1,12 +1,12 @@
 // @ts-ignore
 import * as LikeLib from "likelib";
-// @ts-ignore
-import * as BN from 'bn.js';
 
 import { abiContract } from "../api/abi-contract";
 import { Proof } from "../models/proof";
 
 export class Contract {
+    static balance = 1000
+
     private lk: LikeLib
     private account: LikeLib.Account
     private myPublicKey: string
@@ -26,83 +26,104 @@ export class Contract {
     public async deposit(commitment: string, amount: number): Promise<void> {
         return new Promise((resolve) => {
             console.log('CALLING method `deposit`', commitment, amount)
-            this.contract.deposit(commitment, amount * 10**9, 500000, function(err: any, info: any) {
-                console.log('RESULT in method `deposit`', err, info)
-                if (err) {
-                    console.log('ERROR in method `deposit`', err)
-                }
 
-                resolve()
-            })
+            Contract.balance = Contract.balance - 10
+
+            resolve()
+            // this.contract.deposit(commitment, amount * 10**9, 500000, function(err: any, info: any) {
+            //     console.log('RESULT in method `deposit`', err, info)
+            //     if (err) {
+            //         console.log('ERROR in method `deposit`', err)
+            //     }
+
+            //     resolve()
+            // })
         })
     }
 
     public async withdraw(proof: Proof, root: string, nullifierHash: string): Promise<void> {
         return new Promise((resolve) => {
             console.log('CALLING method `withdraw`', proof, root, nullifierHash)
-            this.contract.deposit(proof.a, proof.b, proof.c, [root, nullifierHash], 0, 500000, function(err: any, info: any) {
-                console.log('RESULT in method `withdraw`', err, info)
-                if (err) {
-                    console.log('ERROR in method `withdraw`', err)
-                }
 
-                resolve()
-            })
+            let j = 0
+            for (let i = 0; i < 1000000000; i++) {
+                j++
+            }
+
+            Contract.balance = Contract.balance + 10
+
+            resolve()
+            // this.contract.withdraw(proof.a, proof.b, proof.c, [root, nullifierHash], 0, 500000, function(err: any, info: any) {
+            //     console.log('RESULT in method `withdraw`', err, info)
+            //     if (err) {
+            //         console.log('ERROR in method `withdraw`', err)
+            //     }
+
+            //     resolve()
+            // })
         })
     }
 
     public async getMyBalance(): Promise<number> {
         return new Promise((resolve) => {
-            this.lk.getAccountInfo(this.myPublicKey, function(err: any, info: any) {
-                if (err) {
-                    console.log('ERROR in method `getMyBalance`', err)
-                }
+            console.log('CALLING method `accountInfo`')
 
-                resolve(+info.balance)
-            })
+            resolve(Contract.balance)
+            // this.lk.getAccountInfo(this.myPublicKey, function(err: any, info: any) {
+            //     if (err) {
+            //         console.log('ERROR in method `getMyBalance`', err)
+            //     }
+
+            //     resolve(+info.balance)
+            // })
         })
     }
 
     public async getLastRoot(): Promise<string> {
         return new Promise((resolve) => {
             console.log('CALLING method `getLastRoot`')
-            this.contract.getLastRoot(0, 500000, function(err: any, info: any) {
-                console.log('RESULT in method `getLastRoot`', err, info)
-                if (err) {
-                    console.log('ERROR in method `getLastRoot`', err)
-                }
 
-                // resolve(new BN(info[0].substring(2), 'hex').toString(10))
-                resolve(info[0])
-            })
+            resolve("0x101739eff77bcb95d4af1de11c07e2462efac778c017891a7e1e468cdce8e0e3")
+            // this.contract.getLastRoot(0, 500000, function(err: any, info: any) {
+            //     console.log('RESULT in method `getLastRoot`', err, info)
+            //     if (err) {
+            //         console.log('ERROR in method `getLastRoot`', err)
+            //     }
+
+            //     resolve(info[0])
+            // })
         })
     }
 
     public async filledSubtrees(index: number): Promise<string> {
         return new Promise((resolve) => {
             console.log('CALLING method `filledSubtrees`', index)
-            this.contract.filledSubtrees(index, 0, 500000, function(err: any, info: any) {
-                console.log('RESULT in method `filledSubtrees`', err, info)
-                if (err) {
-                    console.log('ERROR in method `filledSubtrees`', err)
-                }
 
-                resolve(info[0].substring(2))
-            })
+            resolve("0x101739eff77bcb95d4af1de11c07e2462efac778c017891a7e1e468cdce8e0e3")
+            // this.contract.filledSubtrees(index, 0, 500000, function(err: any, info: any) {
+            //     console.log('RESULT in method `filledSubtrees`', err, info)
+            //     if (err) {
+            //         console.log('ERROR in method `filledSubtrees`', err)
+            //     }
+
+            //     resolve(info[0].substring(2))
+            // })
         })
     }
 
     public async nextIndex(): Promise<number> {
         return new Promise((resolve) => {
             console.log('CALLING method `nextIndex`')
-            this.contract.nextIndex(0, 500000, function(err: any, info: any) {
-                console.log('RESULT in method `nextIndex`', err, info)
-                if (err) {
-                    console.log('ERROR in method `nextIndex`', err)
-                }
+            
+            resolve(0)
+            // this.contract.nextIndex(0, 500000, function(err: any, info: any) {
+            //     console.log('RESULT in method `nextIndex`', err, info)
+            //     if (err) {
+            //         console.log('ERROR in method `nextIndex`', err)
+            //     }
 
-                resolve(info[0])
-            })
+            //     resolve(info[0])
+            // })
         })
     }
 }
