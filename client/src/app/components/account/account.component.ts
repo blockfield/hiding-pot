@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AccountModel } from 'src/app/models/account.model';
 import { StorageService } from 'src/app/services/storage.service';
 import { WalletService } from 'src/app/services/wallet.service';
@@ -16,12 +17,20 @@ export class AccountComponent implements OnInit {
   public newAccount: AccountModel = new AccountModel()
 
   constructor(
+    private modalService: NgbModal,
     private storageService: StorageService,
     private walletService: WalletService,
   ) { }
 
   ngOnInit(): void {
     this.initAccounts()
+  }
+
+  public addNew(content: any): void {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then(
+      () => {},
+      () => {}
+    );
   }
 
   public initAccounts(): void {

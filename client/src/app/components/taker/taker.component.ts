@@ -10,7 +10,7 @@ import { TakeService } from 'src/app/services/take.service';
 export class TakerComponent implements OnInit {
 
   public model: TakerModel = new TakerModel()
-  public amount: string = '10'
+  public amount: string = ''
 
   constructor(
     private takeService: TakeService,

@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   public myBalance: number|null = null
 
   constructor(
-    private walletService: WalletService
+    public walletService: WalletService
   ) {}
 
   ngOnInit(): void {

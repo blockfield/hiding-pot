@@ -1,6 +1,6 @@
 <div class="m-2">
     <div class="row">
-        <div class="col-2 text-center my-auto">
+        <div class="col-3 text-center my-auto">
             <div class="dropdown">
                 <button [ngClass]="{'btn-secondary': !selectedAccount, 'btn-success': selectedAccount}" class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <ng-container *ngIf="!selectedAccount">Select account...</ng-container>
@@ -25,24 +25,35 @@
                 </div>
             </div>
         </div>
-        <div class="col-4 text-center my-auto">
+        <div class="col-3 text-center my-auto">
+            <button class="btn btn-primary px-5" (click)="addNew(mymodal)">Add new...</button>
+        </div>
+    </div>
+</div>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Adding new account...</h4>
+    </div>
+    <div class="modal-body">
+        <div class="col-12 text-center my-3">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <label class="input-group-text col-form-label" for="name">Name</label>
                 </div>
-                <input required type="text" class="form-control" id="name" name="name" placeholder="Demo" [(ngModel)]="newAccount.name">
+                <input required type="text" class="form-control" id="name" name="name" placeholder="Demo" autocomplete="off" [(ngModel)]="newAccount.name">
             </div>
         </div>
-        <div class="col-4 text-center my-auto">
+        <div class="col-12 text-center my-3">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <label class="input-group-text col-form-label" for="privateKey">Private key</label>
                 </div>
-                <input required type="text" class="form-control" id="privateKey" name="privateKey" placeholder="Demo private key..." [(ngModel)]="newAccount.privateKey">
+                <input required type="text" class="form-control" id="privateKey" name="privateKey" placeholder="Demo private key..." autocomplete="off" [(ngModel)]="newAccount.privateKey">
             </div>
         </div>
-        <div class="col-2 text-center my-auto">
-            <button class="btn btn-primary" (click)="createNewAccount()" [disabled]="!newAccount.name || !newAccount.privateKey">Add</button>
+        <div class="col text-center my-3">
+            <button class="btn btn-primary" (click)="createNewAccount(); modal.close('')" [disabled]="!newAccount.name || !newAccount.privateKey">Add</button>
         </div>
     </div>
-</div>
+</ng-template>

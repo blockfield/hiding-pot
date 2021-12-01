@@ -1,7 +1,7 @@
 <div class="m-5">
     <div class="input-group">
         <div class="input-group-prepend">
-            <label class="input-group-text col-form-label" for="amount">Amount</label>
+            <label class="input-group-text col-form-label" for="amount">Amount*</label>
         </div>
         <input
             required
@@ -15,9 +15,9 @@
             [mask]="'separator.0'"
             [(ngModel)]="amount"
         >
-        <div class="input-group-append">
-            <label class="input-group-text col-form-label" for="amount">Only 10 is working for hackaton</label>
-        </div>
+    </div>
+    <div class="text-center">
+        <span style="font-size: 15px;">*only 10 is working for hackaton</span>
     </div>
 </div>
 

@@ -4,7 +4,7 @@
       <app-account></app-account>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="walletService.privateKey" class="row">
     <div class="col-lg-6 border border-bottom-0">
       <app-depositer></app-depositer>
     </div>

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as sha from "js-sha256";
+// @ts-ignore
+import * as BN from 'bn.js';
 import { DepositerModel } from '../models/depositer.model';
 import { Contract } from './contract';
 import { HashService } from './hash.service';
@@ -28,38 +30,57 @@ export class DepositService {
     let contract = new Contract(this.walletService.privateKey)
 
     let pathElements: string[] = []
-    const pathElementsCount = 1
+    const pathElementsCount = 5
     for (let i = 0; i < pathElementsCount; i++) {
-      pathElements.push(await contract.filledSubtrees(i))
+      let pathElement = await contract.filledSubtrees(i)
+      console.log(pathElement)
+      let bnPathElement = this.hexToBigNumber(pathElement.slice(2))
+
+      pathElements.push(bnPathElement.toString())
     }
 
-    console.log('pathElements', pathElements)
-
     let index = await contract.nextIndex()
+    
+    let secretHash = sha.sha256(model.secret)
+    let bSecretHash = Buffer.from(secretHash, 'hex').slice(0, 31)
+    let bnSecretHash = this.hexToBigNumber(bSecretHash.toString('hex'))
+    
+    let nullifier = sha.sha256(bSecretHash.toString('hex'))
+    let bNullifier =  Buffer.from(nullifier, 'hex').slice(0, 31)
+    let bnNullifier = this.hexToBigNumber(bNullifier.toString('hex'))
 
-    console.log('nextIndex', index)
+    let nullifierHash = this.hashService.pedersenHash248(bNullifier.reverse())
 
-    console.log('sha256 secret', sha.sha256(model.secret))
-    let secretHash = Buffer.from(sha.sha256(model.secret), 'hex').slice(0, 31)
-    console.log('secretHash', secretHash)
+    let commitment = this.hashService.pedersenHash496(bNullifier.reverse(), bSecretHash.reverse())
 
-    console.log('sha256 nullifier', sha.sha256(secretHash))
-    let nullifier =  Buffer.from(sha.sha256(secretHash), 'hex').slice(0, 31)
-    console.log('nullifier', nullifier)
-
-    let commitment = this.hashService.pedersenHash496(nullifier, secretHash)
-    console.log('commitment', commitment)
-
-    let pathIndex: number[] = [index % 2] // todo ?
+    let pathIndex = this.createPathsFromIndex(index)
 
     await contract.deposit(commitment, model.amount)
 
     let root = await contract.getLastRoot()
-    console.log('root', root)
-    let nullifierHash = this.hashService.pedersenHash248(nullifier)
+    let bnRoot = this.hexToBigNumber(root.slice(2))
 
-    let proof = await this.proofService.generateProof(root, nullifierHash, nullifier.toString('hex'), secretHash.toString('hex'), pathElements, pathIndex)
+    let proof = await this.proofService.generateProof(bnRoot.toString(), nullifierHash, bnNullifier.toString(), bnSecretHash.toString(), pathElements, pathIndex)
 
     console.log('GENERATED!', proof)
+  }
+
+  private createPathsFromIndex(index: number): string[] {
+    const pathIndexLength = 5
+    let pathIndex = index.toString(2).split('').reverse()
+
+    if (pathIndex.length >= pathIndexLength) {
+      return pathIndex.slice(0, pathIndexLength)
+    }
+
+    while (pathIndex.length !== pathIndexLength) {
+      pathIndex.push('0')
+    }
+
+    return pathIndex
+  }
+
+  private hexToBigNumber(hex: string): BN {
+    return new BN(hex, 16)
   }
 }
