@@ -14,7 +14,7 @@ We aim to bring private transactions to the Clover blockchain. So we have built 
 Sender, recipient, and smart contract are here:
 
 <p align="center">
-    <img src="hiding-pot-scheme.gif" alt="scheme" width="450" height="400">
+    <img src="hiding-pot-scheme.gif" alt="scheme" width="700" height="400">
 </p>
 
 1. To make a deposit, the sender generates a secret and sends its hash along with the deposit amount to the smart contract. 
